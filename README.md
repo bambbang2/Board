@@ -8,7 +8,7 @@
 	- 로그인 양식 
 	- UserDetails, UserDetailsService 인터페이스 구현 클래스
 	- Spring Data JPA + Spring Security -  수정자(AwareAuditor 인터페이스 구현체)
-	- 스프링 시큐리에서 회원 정보 조회 방법 
+	- 스프링 시큐리티에서 회원 정보 조회 방법 
 		- 요청 처리 메서드 주입 
 			- Principal principal  - String getName() : 아이디
 			- @AuthenticationPrincipal UserDetails 구현 클래스의 객체
