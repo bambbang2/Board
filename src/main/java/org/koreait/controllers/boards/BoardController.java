@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.koreait.commons.CommonException;
 import org.koreait.commons.MemberUtil;
+import org.koreait.commons.Pagination;
 import org.koreait.entities.Board;
 import org.koreait.entities.BoardData;
 import org.koreait.entities.Member;
@@ -13,6 +14,7 @@ import org.koreait.models.board.*;
 import org.koreait.models.board.config.BoardConfigInfoService;
 import org.koreait.models.board.config.BoardNotAllowAccessException;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +32,7 @@ public class BoardController {
     private final BoardConfigInfoService boardConfigInfoService;
     private final BoardDataInfoService infoService;
     private final BoardDataSaveService saveService;
+    private final BoardListService listService;
     private final BoardFormValidator formValidator;
     private final HttpServletResponse response;
     private final MemberUtil memberUtil;
@@ -38,16 +41,24 @@ public class BoardController {
     private final BoardDataDeleteService deleteService;
     private final HttpSession session;
 
+
     private Board board; // 게시판 설정
 
     /**
-     * 게시글 목록
+     * 게시글 목록 - 2023/07/11~12
+     *
      * @param bId
      * @return
      */
     @GetMapping("/list/{bId}")
-    public String list(@PathVariable String bId, Model model) {
+    public String list(@PathVariable String bId, BoardSearchForm searchForm, Model model) {
         commonProcess(bId, "list", model);
+
+        Page<BoardData> data = listService.gets(bId, searchForm);
+        Pagination<BoardData> pagination = listService.getPagination();
+
+        model.addAttribute("data", data);
+        model.addAttribute("pagination", pagination);
 
         return "board/list";
     }

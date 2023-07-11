@@ -1,12 +1,11 @@
 package org.koreait.commons;
 
-import jakarta.servlet.http.HttpSession;
 import org.koreait.commons.constants.Role;
 import org.koreait.entities.Member;
 import org.koreait.models.member.MemberInfo;
+import jakarta.servlet.http.HttpSession;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -29,7 +28,6 @@ public class MemberUtil {
      * @return
      */
     public boolean isAdmin() {
-
         return isLogin() && getMember().getRoles() == Role.ADMIN;
     }
 
